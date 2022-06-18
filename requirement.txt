@@ -1,0 +1,6 @@
+discord-py-slash-command
+discord-ext-bot
+discord.py
+discord-ui
+json2json
+requests
