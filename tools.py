@@ -60,11 +60,14 @@ async def downloadFile():
 
 def findTown(town):
     res = []
-    with open('dataEssence.json', 'r') as f:
-        data = json.load(f)
-        for i in data:
-            if i['fields']['ville'] == town:
-                res.append(i['fields'])
+    try :
+        with open('dataEssence.json', 'r') as f:
+            data = json.load(f)
+            for i in data:
+                if i['fields']['ville'] == town:
+                    res.append(i['fields'])
+    except FileNotFoundError:
+        print("Fichier non trouvé")
     if len(res) == 0:
         return None
     return res
