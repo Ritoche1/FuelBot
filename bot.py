@@ -77,7 +77,7 @@ async def _update(ctx: SlashContext):
 @bot.listen("on_button")
 async def on_button(btn: ButtonInteraction):
     custom_id = btn.data['custom_id']
-    town, idMessage = getDataFromId(message, btn.message.id)
+    town, idButton, idMessage = getDataFromId(message, btn.message.id)
     tmp_message = await bot.get_channel(btn.channel_id).fetch_message(idMessage)
     if custom_id == "previous":
         if (town.page - 1) >= 0:

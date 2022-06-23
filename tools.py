@@ -89,7 +89,7 @@ def getCheapest(res):
 def getDataFromId(message, id):
     for i in message:
         if (i['button'] == id):
-            return i['town'], i['button']
+            return i['town'], i['button'], i['message']
     return None
 
 def getDistance(first, second):
