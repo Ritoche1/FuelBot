@@ -7,9 +7,9 @@ from discord_ui import Components, Button, UI, ButtonInteraction
 import json
 import requests
 
-from tools import Tools, downloadFile, getEmbedPage, getDataFromId
+from town import Town
+from tools import getEmbedPage, downloadFile, getDataFromId
 
-town = Tools("Lambersart")
 message = []
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
@@ -24,8 +24,29 @@ async def on_ready():
 
 @slash.slash(name="search", description="Make a research of the price in the town")
 async def _search(ctx: SlashContext, ville: str):
-    ville = ville.capitalize()
-    town = Tools(ville)
+    ville = ville.lower()
+    town = Town()
+    town.classFindTown(ville)
+    if town.town != []:
+        embed = getEmbedPage(town, 0)
+        button1 = Button(label="Previous", emoji="⬅", custom_id="previous")
+        button2 = Button(label="Next", emoji="➡", custom_id="next")
+        tmp = await ctx.send(embed=embed)
+        button = await ui.components.send(ctx.channel,components=[button1, button2])
+        message.append({
+            "message": tmp.id,
+            "button": button.id,
+            "town" : town
+        })
+    else:
+        await ctx.send(content="La ville n'a pas été trouvée")
+
+
+@slash.slash(name="cheapest", description="Make a research of the cheapest price near the town")
+async def _cheap(ctx: SlashContext, ville: str, distance : int):
+    ville = ville.lower()
+    town = Town()
+    town.classFindNearCheap(ville, distance)
     if town.town != []:
         embed = getEmbedPage(town, 0)
         # await ctx.send(embeds=[embed])
