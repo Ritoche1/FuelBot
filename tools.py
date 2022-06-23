@@ -6,9 +6,9 @@ import json
 import discord
 
 
-
 def getEmbedPage(town, i):
-    embed = discord.Embed(title=town.town[i], color=0xc2dd2c, description="Page " + str(i + 1) + "/" + str(len(town.town)))
+    URL = f"https://www.google.fr/maps/place/{town.address[i].replace(' ', '+')}+{town.cp[i]}"
+    embed = discord.Embed(title=town.town[i], color=0xc2dd2c, description="Page " + str(i + 1) + "/" + str(len(town.town)), url=URL)
     embed.add_field(name="Adresse", value=town.address[i], inline=False)
     embed.add_field(name="Code Postale", value=town.cp[i], inline=False)
     embed.add_field(name="Prix", value=str(town.price[i]) + "€/L")

@@ -18,10 +18,17 @@ ui = UI(bot)
 
 data = json.load(open("config.json"))
 
+########################################
+    # Event #
+########################################
+
 @bot.event
 async def on_ready():
     print("Bot is ready!")
 
+########################################
+    # Slash Command #
+########################################
 @slash.slash(name="search", description="Make a research of the price in the town")
 async def _search(ctx: SlashContext, ville: str):
     ville = ville.lower()
@@ -63,7 +70,6 @@ async def _cheap(ctx: SlashContext, ville: str, distance : int):
         await ctx.send(content="La ville n'a pas été trouvée")
 
 
-
 @slash.slash(name="update", description="Update the fuel file")
 async def _update(ctx: SlashContext):
     if (isUpdated()):
@@ -75,6 +81,9 @@ async def _update(ctx: SlashContext):
     else :
         await ctx.send(content="Vous n'avez pas les droits pour cette commande, demandez à l'admin")
 
+########################################
+    # Button listener #
+########################################
 
 @bot.listen("on_button")
 async def on_button(btn: ButtonInteraction):
@@ -100,6 +109,7 @@ async def on_button(btn: ButtonInteraction):
             embed = getEmbedPage(town, town.getPage())
             await tmp_message.edit(embed=embed)
     await btn.respond(ninja_mode=True)
-            
+
+
 
 bot.run(data['TOKEN'])
