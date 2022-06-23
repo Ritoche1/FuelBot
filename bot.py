@@ -8,7 +8,7 @@ import json
 import requests
 
 from town import Town
-from tools import getEmbedPage, downloadFile, getDataFromId
+from tools import getEmbedPage, downloadFile, getDataFromId, isUpdated
 
 message = []
 
@@ -66,12 +66,14 @@ async def _cheap(ctx: SlashContext, ville: str, distance : int):
 
 @slash.slash(name="update", description="Update the fuel file")
 async def _update(ctx: SlashContext):
-    if (ctx.author.id == data['OWNER']):
-        await ctx.send(content="Le fichier se met met à jour;cela peut prendre 1 min")
+    if (isUpdated()):
+        await ctx.send(content="Le fichier est déjà à jour")
+    elif (ctx.author.id == data['OWNER']):
+        await ctx.send(content="Mise à jour du fichier...")
         await downloadFile()
-        await ctx.send(content="Le fichier a été mis à jour")
+        await ctx.send(content="Fichier mis à jour")
     else :
-        await ctx.send(content="Vous n'avez pas les droits pour cette commande")
+        await ctx.send(content="Vous n'avez pas les droits pour cette commande, demandez à l'admin")
 
 
 @bot.listen("on_button")
