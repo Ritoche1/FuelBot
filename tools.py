@@ -102,8 +102,11 @@ def isUpdated():
         with open('dataEssence.json', 'r') as f:
             data = json.load(f)
             for i in data:
-                if datetime.strptime(i['fields']['prix_maj'],"%Y-%m-%dT%H:%M:%S+02:00").date() == datetime.now().date():
-                    return True
+                try :
+                    if datetime.strptime(i['fields']['prix_maj'],"%Y-%m-%dT%H:%M:%S+02:00").date() == datetime.now().date():
+                        return True
+                except KeyError:
+                    pass
     except FileNotFoundError:
         print("Fichier non trouvé")
     return False
