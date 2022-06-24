@@ -74,7 +74,7 @@ async def _cheap(ctx: SlashContext, ville: str, distance : int):
 async def _update(ctx: SlashContext):
     if (isUpdated()):
         await ctx.send(content="Le fichier est déjà à jour")
-    elif (ctx.author.id == data['OWNER']):
+    elif (ctx.author.id in data['OWNER']):
         await ctx.send(content="Mise à jour du fichier...")
         await downloadFile()
         await ctx.send(content="Fichier mis à jour")
